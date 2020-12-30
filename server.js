@@ -1,19 +1,41 @@
-const Express = require('express');
-const App = Express();
-const BodyParser = require('body-parser');
-const PORT = 8080;
+const express = require('express');
+const app = express();
+const bodyparser = require('body-parser');
+require("dotenv").config();
+const PORT = process.env.PORT || 8000;
 
-// Express Configuration
-App.use(BodyParser.urlencoded({ extended: false }));
-App.use(BodyParser.json());
-App.use(Express.static('public'));
+// express configuration
+app.use(bodyparser.urlencoded({ extended: false }));
+app.use(bodyparser.json());
+app.use(express.static('public'));
+
+// PG database client / connection setup
+const { Pool } = require("pg");
+const dbParams = require("./knexfile.js");
+const environment = process.env.ENVIRONMENT || "development";
+let connectionParams;
+if (environment === "production") {
+  connectionParams = {
+    connectionString: dbParams.production.connection,
+    ssl: {
+      rejectUnauthorized: false,
+    },
+  };
+} else {
+  connectionParams = dbParams.development.connection;
+}
+const db = new Pool(connectionParams);
+db.connect();
+
+// TEST QUERY
+db.query("INSERT INTO users (first_name) VALUES ('Shadee');")
 
 // Sample GET route
-App.get('/api/data', (req, res) => res.json({
+app.get('/api/data', (req, res) => res.json({
   message: "Seems to work!",
 }));
 
-App.listen(PORT, () => {
+app.listen(PORT, () => {
   // eslint-disable-next-line no-console
-  console.log(`Express seems to be listening on port ${PORT} so that's pretty good 👍`);
+  console.log(`Server listening on port ${PORT}`);
 });
