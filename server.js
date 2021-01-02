@@ -28,7 +28,10 @@ const db = new Pool(connectionParams);
 db.connect();
 
 // TEST QUERY
-db.query("INSERT INTO users (first_name) VALUES ('Shadee');")
+db.query("SELECT * FROM tutors")
+.then(data => {
+  console.log(data.rows);
+})
 
 // Sample GET route
 app.get('/api/data', (req, res) => res.json({
