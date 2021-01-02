@@ -13,3 +13,8 @@ CREATE TABLE tutors (
   course_list text[]
 );
 
+CREATE TABLE programs (
+  id SERIAL PRIMARY KEY NOT NULL,
+  name VARCHAR(255) NOT NULL
+)
+

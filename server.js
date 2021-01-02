@@ -27,16 +27,12 @@ if (environment === "production") {
 const db = new Pool(connectionParams);
 db.connect();
 
-// TEST QUERY
-db.query("SELECT * FROM tutors")
-.then(data => {
-  console.log(data.rows);
-})
+// Import Routers
+const programs = require('./src/routes/programs');
 
-// Sample GET route
-app.get('/api/data', (req, res) => res.json({
-  message: "Seems to work!",
-}));
+// API Router
+app.use('/api', programs(db));
+
 
 app.listen(PORT, () => {
   // eslint-disable-next-line no-console
