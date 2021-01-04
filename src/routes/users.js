@@ -21,7 +21,9 @@ module.exports = (db) => {
 
   router.post('/users', (req, res) => {
 
-    const { uid, email } = req.body.user;
+    console.log(req.body);
+
+    const { uid, email } = req.body.user.user;
     const { program } = req.body;
     const queryParams = [
       uid,
