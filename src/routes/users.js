@@ -23,6 +23,9 @@ module.exports = (db) => {
       console.log('hi there');
       res.send('after database')
     })
+    .catch(error => {
+      res.status(400).send({ error })
+    })
 
 
   })
