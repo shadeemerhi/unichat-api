@@ -29,9 +29,11 @@ db.connect();
 
 // Import Routers
 const programs = require('./src/routes/programs');
+const users = require('./src/routes/users');
 
 // API Router
 app.use('/api', programs(db));
+app.use('/api', users(db));
 
 
 app.listen(PORT, () => {
