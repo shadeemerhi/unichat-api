@@ -3,7 +3,7 @@ const router = require('express').Router();
 module.exports = (db) => {
 
   router.get('/users/:email', (req, res) => {
-    const email = req.params;
+    const email = req.params.email;
     console.log('email at endpoint', email);
     const queryParams = [
       email
@@ -11,7 +11,11 @@ module.exports = (db) => {
 
     const query = `SELECT * FROM users WHERE email = $1`;
     db.query(query, queryParams).then(data => {
-      res.send(data.rows);
+
+      // Temp setTimeout to mock api response time
+      setTimeout(() => {
+        res.send(data.rows);
+      }, 500)
     })
   })
 
