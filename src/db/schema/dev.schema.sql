@@ -7,6 +7,7 @@ DROP TABLE IF EXISTS programs CASCADE;
 
 CREATE TABLE users (
   id SERIAL PRIMARY KEY NOT NULL,
+  uid VARCHAR(255) NOT NULL,
   email VARCHAR(255) NOT NULL,
   program VARCHAR(255),
   is_active boolean DEFAULT true,

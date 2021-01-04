@@ -31,6 +31,14 @@ db.connect();
 const programs = require('./src/routes/programs');
 const users = require('./src/routes/users');
 
+const queryParams = [
+  3242342,
+  'shadmerhi@gmail.com',
+  'engineering'
+]
+
+// db.query('INSERT INTO users (id, email, program) VALUES ($1, $2, $3)', queryParams);
+
 // API Router
 app.use('/api', programs(db));
 app.use('/api', users(db));

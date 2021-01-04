@@ -4,13 +4,8 @@ module.exports = (db) => {
 
   router.post('/users', (req, res) => {
 
-    console.log('at the api', req.body);
-
     const { uid, email } = req.body.user;
     const { program } = req.body;
-    // setTimeout(() => {
-    //   res.send('coming from backend!');
-    // }, 500)
     const queryParams = [
       uid,
       email,
@@ -18,18 +13,18 @@ module.exports = (db) => {
     ];
 
     console.log('user stuff', queryParams);
-    
+
     const query = 
-    `INSERT INTO userse (id, email, program) 
+    `INSERT INTO users (uid, email, program) 
     VALUES
     ($1, $2, $3)`;
 
-    db.query(query, queryParams).then(() => {
+    return db.query(query, queryParams).then((data) => {
+      console.log('hi there');
       res.send('after database')
     })
-    .catch(error => {
-      res.send(error);
-    })
+
+
   })
 
   return router;
