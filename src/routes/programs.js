@@ -6,7 +6,6 @@ module.exports = (db) => {
     const query = 'SELECT * FROM programs';
     db.query(query).then(data => {
       res.send(data.rows);
-      console.log(data.rows);
     })
   })
   return router;
