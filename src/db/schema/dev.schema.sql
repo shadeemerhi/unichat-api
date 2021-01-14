@@ -8,6 +8,8 @@ DROP TABLE IF EXISTS programs CASCADE;
 CREATE TABLE users (
   id VARCHAR(255) PRIMARY KEY NOT NULL,
   email VARCHAR(255) NOT NULL,
+  first_name VARCHAR(255) NOT NULL,
+  last_name VARCHAR(255) NOT NULL,
   program VARCHAR(255),
   is_active boolean DEFAULT true,
   is_tutor boolean DEFAULT false

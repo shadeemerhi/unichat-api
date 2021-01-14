@@ -19,24 +19,27 @@ module.exports = (db) => {
     })
   })
 
+
   router.post('/users', (req, res) => {
 
     console.log(req.body);
 
-    const { uid, email } = req.body.user.user;
-    const { program } = req.body;
+    const { uid, email } = req.body.currentUser.user;
+    const { firstName, lastName, program } = req.body.currentUser;
     const queryParams = [
       uid,
       email,
+      firstName,
+      lastName,
       program
     ];
 
     console.log('user stuff', queryParams);
 
     const query = 
-    `INSERT INTO users (id, email, program) 
+    `INSERT INTO users (id, email, first_name, last_name, program) 
     VALUES
-    ($1, $2, $3)`;
+    ($1, $2, $3, $4, $5)`;
 
     return db.query(query, queryParams).then((data) => {
       console.log('hi there');
