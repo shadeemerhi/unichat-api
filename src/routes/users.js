@@ -34,7 +34,7 @@ module.exports = (db) => {
     console.log('user stuff', queryParams);
 
     const query = 
-    `INSERT INTO users (uid, email, program) 
+    `INSERT INTO users (id, email, program) 
     VALUES
     ($1, $2, $3)`;
 

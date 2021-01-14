@@ -6,8 +6,7 @@ DROP TABLE IF EXISTS programs CASCADE;
 
 
 CREATE TABLE users (
-  id SERIAL PRIMARY KEY NOT NULL,
-  uid VARCHAR(255) NOT NULL,
+  id VARCHAR(255) PRIMARY KEY NOT NULL,
   email VARCHAR(255) NOT NULL,
   program VARCHAR(255),
   is_active boolean DEFAULT true,
@@ -22,7 +21,7 @@ CREATE TABLE courses (
 
 CREATE TABLE tutors (
   id SERIAL PRIMARY KEY NOT NULL,
-
+  user_id VARCHAR(255) REFERENCES users(id),
   course_list text[]
 );
 
