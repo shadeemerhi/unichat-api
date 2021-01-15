@@ -28,20 +28,14 @@ const db = new Pool(connectionParams);
 db.connect();
 
 // Import Routers
-const programs = require('./src/routes/programs');
 const users = require('./src/routes/users');
-
-const queryParams = [
-  3242342,
-  'shadmerhi@gmail.com',
-  'engineering'
-]
-
-// db.query('INSERT INTO users (id, email, program) VALUES ($1, $2, $3)', queryParams);
+const programs = require('./src/routes/programs');
+const courses = require('./src/routes/courses');
 
 // API Router
 app.use('/api', programs(db));
 app.use('/api', users(db));
+app.use('/api', courses(db));
 
 
 app.listen(PORT, () => {
