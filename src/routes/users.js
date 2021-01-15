@@ -2,20 +2,21 @@ const router = require('express').Router();
 
 module.exports = (db) => {
 
-  router.get('/users/:email', (req, res) => {
-    const email = req.params.email;
-    console.log('email at endpoint', email);
+  router.get('/users/:id', (req, res) => {
+    const uid = req.params.id;
     const queryParams = [
-      email
-    ];
+      uid
+    ]
+    console.log(uid);
 
-    const query = `SELECT * FROM users WHERE email = $1`;
+    const query = `SELECT * FROM users WHERE id = $1`;
     db.query(query, queryParams).then(data => {
-
-      // Temp setTimeout to mock api response time
-      setTimeout(() => {
-        res.send(data.rows);
-      }, 500)
+      const user = data.rows[0];
+      console.log(user);
+      res.send(user);
+    })
+    .catch(error => {
+      res.status(400).send({ error })
     })
   })
 
