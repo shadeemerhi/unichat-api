@@ -26,7 +26,8 @@ module.exports = (db) => {
     console.log(req.body);
 
     const { uid, email } = req.body.currentUser.user;
-    const { firstName, lastName, program } = req.body.currentUser;
+    const { firstName, lastName } = req.body.currentUser;
+    const { program } = req.body;
     const queryParams = [
       uid,
       email,
