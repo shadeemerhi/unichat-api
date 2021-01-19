@@ -37,18 +37,7 @@ db.connect();
 const socketUsers = {};
 
 io.on('connection', socket => {
-
   manageSocket(socket);
-  console.log('New Connection');
-  
-  const id = socket.handshake.query.id;
-  socketUsers[id] = socket.id;
-  console.log(socketUsers);
-  
-
-  socket.on('disconnect', () => {
-    console.log('Disconnected');
-  })
 })
 
 // express configuration
