@@ -13,28 +13,6 @@ const io = socketio(server, {
   }
 });
 
-
-const socketUsers = {};
-
-
-io.on('connection', socket => {
-  console.log('New Connection');
-
-  console.log(socketUsers);
-  
-  const id = socket.handshake.query.id;
-  socketUsers[id] = socket.id;
-
-  socket.on('disconnect', () => {
-    console.log('Disconnected');
-  })
-})
-
-// express configuration
-app.use(bodyparser.urlencoded({ extended: false }));
-app.use(bodyparser.json());
-app.use(express.static('public'));
-
 // PG database client / connection setup
 const { Pool } = require("pg");
 const dbParams = require("./knexfile.js");
@@ -53,7 +31,32 @@ if (environment === "production") {
 
 // Database connection
 const db = new Pool(connectionParams);
+const { manageSocket } = require('./src/socket')(db);
 db.connect();
+
+const socketUsers = {};
+
+io.on('connection', socket => {
+
+  manageSocket(socket);
+  console.log('New Connection');
+  
+  const id = socket.handshake.query.id;
+  socketUsers[id] = socket.id;
+  console.log(socketUsers);
+  
+
+  socket.on('disconnect', () => {
+    console.log('Disconnected');
+  })
+})
+
+// express configuration
+app.use(bodyparser.urlencoded({ extended: false }));
+app.use(bodyparser.json());
+app.use(express.static('public'));
+
+
 
 // Import Routers
 const users = require('./src/routes/users');
