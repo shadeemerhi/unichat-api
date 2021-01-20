@@ -34,10 +34,9 @@ const db = new Pool(connectionParams);
 const { manageSocket } = require('./src/socket')(db);
 db.connect();
 
-const socketUsers = {};
-
+// Socket events managed in a separate module
 io.on('connection', socket => {
-  manageSocket(socket);
+  manageSocket(socket, io);
 })
 
 // express configuration
