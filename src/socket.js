@@ -1,3 +1,5 @@
+const roomUsers = {};
+
 module.exports = (db) => {
   
   const users = {};
@@ -8,19 +10,18 @@ module.exports = (db) => {
     users[id] = socket.id;
     console.log(users);
   
-    socket.on('sendMessage', ({ message }) => {
-      console.log('message has happened');
-      console.log('message sent from socket', socket.id);
-  
-      const socketId = users['SaRRezWfiUVEDXwYB0R614r3GkU2'];
-      console.log(socketId);
-      io.to(socketId).emit("hey", "I just met you");
-  
-      
-    })
-    
-    socket.on('disconnect', () => {
-      console.log('Disconnected');
+    socket.on('join-room', ({ room, currentUser }) => {
+      if(!roomUsers[room]) roomUsers[room] = [];
+
+      console.log(`${currentUser.firstName} has joined`);
+      roomUsers[room].push(currentUser);
+      console.log(roomUsers);
+
+      socket.on('leave-room', ( { currentUser }) => {
+        socket.leave(room);
+        socket.removeAllListeners('leave-room');
+        console.log(`${currentUser.firstName} has left`)
+      })
     })
   }
 
