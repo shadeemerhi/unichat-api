@@ -1,3 +1,5 @@
+const { removeUserFromRoom } = require('../src/helpers/roomUsers');
+
 const roomUsers = {};
 
 module.exports = (db) => {
@@ -17,14 +19,14 @@ module.exports = (db) => {
       roomUsers[room].push(currentUser);
       console.log(roomUsers);
 
-      socket.on('leave-room', ( { currentUser }) => {
+      socket.on('leave-room', ({ currentUser }) => {
+        roomUsers[room] = removeUserFromRoom(roomUsers[room], currentUser.user.uid);
         socket.leave(room);
         socket.removeAllListeners('leave-room');
-        console.log(`${currentUser.firstName} has left`)
+        console.log(`${currentUser.firstName} has left`);
       })
     })
   }
-
 
   return { manageSocket }
 }
