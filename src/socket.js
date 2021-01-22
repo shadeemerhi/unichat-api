@@ -15,12 +15,11 @@ module.exports = (db) => {
     socket.on('join-room', ({ room, currentUser }, callback) => {
       if(!roomUsers[room]) roomUsers[room] = [];
       roomUsers[room].push(currentUser);
-      callback(roomUsers[room]);
+      socket.emit('update-users', roomUsers[room]);
       socket.to(room).emit('update-users', roomUsers[room]);
       socket.join(room);
 
       console.log(`${currentUser.firstName} has joined`);
-      console.log(roomUsers);
 
       socket.on('leave-room', ({ currentUser }, callback) => {
         roomUsers[room] = removeUserFromRoom(roomUsers[room], currentUser.user.uid);
