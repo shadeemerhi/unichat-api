@@ -15,8 +15,9 @@ module.exports = (db) => {
     socket.on('join-room', ({ room, currentUser }, callback) => {
       if(!roomUsers[room]) roomUsers[room] = [];
       roomUsers[room].push(currentUser);
-      socket.emit('update-users', roomUsers[room]);
-      socket.to(room).emit('update-users', roomUsers[room]);
+      callback(roomUsers[room]);
+      socket.to(room).emit('update-users', 
+        { message: `${currentUser.firstName} ${currentUser.lastName} has joined!`, users: roomUsers[room] });
       socket.join(room);
 
       console.log(`${currentUser.firstName} has joined`);
@@ -24,7 +25,8 @@ module.exports = (db) => {
       socket.on('leave-room', ({ currentUser }, callback) => {
         roomUsers[room] = removeUserFromRoom(roomUsers[room], currentUser.user.uid);
         callback(roomUsers[room]);
-        socket.to(room).emit('update-users', roomUsers[room]);
+        socket.to(room).emit('update-users', 
+          { message: `${currentUser.firstName} ${currentUser.lastName} left.`, users: roomUsers[room] });
         socket.leave(room);
         socket.removeAllListeners('leave-room');
         console.log(`${currentUser.firstName} has left`);
