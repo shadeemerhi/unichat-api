@@ -26,7 +26,7 @@ module.exports = (db) => {
         roomUsers[room] = removeUserFromRoom(roomUsers[room], currentUser.user.uid);
         callback(roomUsers[room]);
         socket.to(room).emit('update-users', 
-          { message: `${currentUser.firstName} ${currentUser.lastName} left.`, users: roomUsers[room] });
+          { message: `${currentUser.firstName} ${currentUser.lastName} left`, users: roomUsers[room] });
         socket.leave(room);
         socket.removeAllListeners('leave-room');
         console.log(`${currentUser.firstName} has left`);
