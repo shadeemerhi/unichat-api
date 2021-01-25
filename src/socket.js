@@ -10,27 +10,31 @@ module.exports = (db) => {
     console.log('New Connection');
     const id = socket.handshake.query.id;
     users[id] = socket.id;
+    // console.log(socket.id);
     console.log(users);
   
     socket.on('join-room', ({ room, currentUser }, callback) => {
-      if(!roomUsers[room]) roomUsers[room] = [];
-      roomUsers[room].push(currentUser);
-      callback(roomUsers[room]);
-      socket.to(room).emit('update-users', 
-        { message: `${currentUser.firstName} ${currentUser.lastName} has joined!`, users: roomUsers[room] });
+      if(!roomUsers[room]) roomUsers[room] = {};
+      if(!roomUsers[room][currentUser.user.uid]) roomUsers[room][currentUser.user.uid] = currentUser;
       socket.join(room);
+      callback(Object.values(roomUsers[room]));
+      socket.to(room).emit('update-users', 
+        { message: `${currentUser.firstName} ${currentUser.lastName} has joined!`, users: Object.values(roomUsers[room]) });
 
       console.log(`${currentUser.firstName} has joined`);
 
       socket.on('leave-room', ({ currentUser }, callback) => {
-        roomUsers[room] = removeUserFromRoom(roomUsers[room], currentUser.user.uid);
-        callback(roomUsers[room]);
+        delete roomUsers[room][currentUser.user.uid];
         socket.to(room).emit('update-users', 
-          { message: `${currentUser.firstName} ${currentUser.lastName} left`, users: roomUsers[room] });
+          { message: `${currentUser.firstName} ${currentUser.lastName} left`, users: Object.values(roomUsers[room]) });
         socket.leave(room);
         socket.removeAllListeners('leave-room');
         console.log(`${currentUser.firstName} has left`);
       })
+    });
+
+    socket.on('disconnect', () => {
+      console.log('disconnected');
     })
   }
 
