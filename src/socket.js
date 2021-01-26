@@ -33,6 +33,10 @@ module.exports = (db) => {
       })
     });
 
+    socket.on('send-message', ({ message, currentUser }) => {
+      console.log(message);
+    })
+
     socket.on('disconnect', () => {
       console.log('disconnected');
     })
