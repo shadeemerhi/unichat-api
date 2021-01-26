@@ -10,7 +10,7 @@ module.exports = (db) => {
     console.log('New Connection');
     const id = socket.handshake.query.id;
     users[id] = socket.id;
-    console.log(users);
+    // console.log(users);
   
     socket.on('join-room', ({ room, currentUser }, callback) => {
       if(!roomUsers[room]) roomUsers[room] = {};
@@ -35,7 +35,6 @@ module.exports = (db) => {
     socket.on('send-message', ({ room, message, currentUser }) => {
       io.in(room).emit('message', 
         { text: message, id: currentUser.user.uid, firstName: currentUser.firstName, lastName: currentUser.lastName });
-      console.log(message);
     })
 
     socket.on('disconnect', () => {
