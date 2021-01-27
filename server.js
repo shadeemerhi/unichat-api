@@ -31,8 +31,14 @@ if (environment === "production") {
 
 // Database connection
 const db = new Pool(connectionParams);
-const { manageSocket } = require('./src/socket')(db);
+// const { manageSocket } = require('./src/socket')(db);
 db.connect();
+
+// Import helper functions
+const messageHelpers = require('./src/helpers/messages')(db);
+
+// Socket manager
+const { manageSocket } = require('./src/socket')(db);
 
 // Socket events managed in a separate module
 io.on('connection', socket => {
@@ -44,18 +50,17 @@ app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
 app.use(express.static('public'));
 
-
-
 // Import Routers
 const users = require('./src/routes/users');
 const programs = require('./src/routes/programs');
 const courses = require('./src/routes/courses');
+const messages = require('./src/routes/messages')(messageHelpers);
 
 // API Router
 app.use('/api', programs(db));
 app.use('/api', users(db));
 app.use('/api', courses(db));
-
+app.use('/api', messages);
 
 server.listen(PORT, () => {
   // eslint-disable-next-line no-console

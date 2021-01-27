@@ -1,8 +1,9 @@
 const { removeUserFromRoom } = require('../src/helpers/roomUsers');
+const createMessage = require('../src/helpers/messages')().createMessage;
 
 const roomUsers = {};
 
-module.exports = (db) => {
+module.exports = () => {
   
   const users = {};
   const manageSocket = function(socket, io) {
@@ -35,6 +36,7 @@ module.exports = (db) => {
     socket.on('send-message', ({ room, message, currentUser }) => {
       io.in(room).emit('message', 
         { text: message, id: currentUser.user.uid, firstName: currentUser.firstName, lastName: currentUser.lastName });
+      createMessage(message);
     })
 
     socket.on('disconnect', () => {
