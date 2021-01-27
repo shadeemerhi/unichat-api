@@ -11,7 +11,6 @@ module.exports = () => {
     console.log('New Connection');
     const id = socket.handshake.query.id;
     users[id] = socket.id;
-    // console.log(users);
   
     socket.on('join-room', ({ room, currentUser }, callback) => {
       if(!roomUsers[room]) roomUsers[room] = {};
