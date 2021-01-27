@@ -1,7 +1,8 @@
 module.exports = (db) => {
 
-  const createMessage = (body) => {
-    console.log('inside the function', body);
+  const createMessage = (course_id, sender_id, body) => {
+
+    console.log('message details', course_id, sender_id, body);
   }
 
   return { createMessage };

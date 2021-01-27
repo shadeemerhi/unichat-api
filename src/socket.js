@@ -33,10 +33,10 @@ module.exports = () => {
       })
     });
 
-    socket.on('send-message', ({ room, message, currentUser }) => {
+    socket.on('send-message', ({ room_id, room, message, currentUser }) => {
       io.in(room).emit('message', 
-        { text: message, id: currentUser.user.uid, firstName: currentUser.firstName, lastName: currentUser.lastName });
-      createMessage(message);
+        { text: message, uid: currentUser.user.uid, firstName: currentUser.firstName, lastName: currentUser.lastName });
+      createMessage(room_id, currentUser.user.uid, message);
     })
 
     socket.on('disconnect', () => {
