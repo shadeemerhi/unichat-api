@@ -42,7 +42,7 @@ const { manageSocket } = require('./src/socket')(db);
 
 // Socket events managed in a separate module
 io.on('connection', socket => {
-  manageSocket(socket, io);
+  manageSocket(db, socket, io);
 })
 
 // express configuration

@@ -1,13 +1,13 @@
 const { removeUserFromRoom } = require('../src/helpers/roomUsers');
-const createMessage = require('../src/helpers/messages')().createMessage;
 
 const roomUsers = {};
 
 module.exports = () => {
   
   const users = {};
-  const manageSocket = function(socket, io) {
-
+  const manageSocket = function(db, socket, io) {
+    
+    const createMessage = require('../src/helpers/messages')(db).createMessage;
     console.log('New Connection');
     const id = socket.handshake.query.id;
     users[id] = socket.id;
@@ -34,9 +34,11 @@ module.exports = () => {
     });
 
     socket.on('send-message', ({ room_id, room, message, currentUser }) => {
-      io.in(room).emit('message', 
-        { text: message, uid: currentUser.user.uid, firstName: currentUser.firstName, lastName: currentUser.lastName });
-      createMessage(room_id, currentUser.user.uid, message);
+      createMessage(room_id, currentUser.user.uid, message)
+      .then(() => {
+        io.in(room).emit('message', 
+          { text: message, uid: currentUser.user.uid, firstName: currentUser.firstName, lastName: currentUser.lastName });
+      });
     })
 
     socket.on('disconnect', () => {
