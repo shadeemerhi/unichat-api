@@ -37,13 +37,12 @@ module.exports = () => {
       .then(() => {
         io.in(room).emit('message', 
           { 
-            room_id,
+            course_id: room_id,
             sender_id: currentUser.user.uid,
             body: message, 
             firstName: currentUser.firstName, 
             lastName: currentUser.lastName,
             is_edited: false,
-            is_loading: false
           }
         );
       });
