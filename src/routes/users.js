@@ -35,7 +35,7 @@ module.exports = (db) => {
     console.log('User info', queryParams);
 
     const query = 
-    `INSERT INTO users (id, email, first_name, last_name, program) 
+    `INSERT INTO users (id, email, "firstName", "lastName", program) 
     VALUES
     ($1, $2, $3, $4, $5)`;
 
@@ -43,6 +43,7 @@ module.exports = (db) => {
       res.send('after database')
     })
     .catch(error => {
+      console.log(error);
       res.status(400).send({ error })
     })
   });

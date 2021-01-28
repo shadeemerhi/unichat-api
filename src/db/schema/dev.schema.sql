@@ -8,8 +8,8 @@ DROP TABLE IF EXISTS coursesMessages CASCADE;
 CREATE TABLE users (
   id VARCHAR(255) PRIMARY KEY NOT NULL,
   email VARCHAR(255) NOT NULL,
-  first_name VARCHAR(255) NOT NULL,
-  last_name VARCHAR(255) NOT NULL,
+  "firstName" VARCHAR(255) NOT NULL,
+  "lastName" VARCHAR(255) NOT NULL,
   program VARCHAR(255),
   is_active BOOLEAN DEFAULT true,
   is_tutor BOOLEAN DEFAULT false
