@@ -17,5 +17,26 @@ module.exports = (db) => {
     return db.query(query, queryParams);
   }
 
-  return { createMessage };
+  const getMessagesInRoom = (room_id) => {
+
+    const queryParams = [
+      room_id
+    ];
+
+    const query = 
+    `
+    SELECT course_id, sender_id, body, first_name, last_name, is_edited
+    FROM coursesMessages
+    JOIN users ON sender_id = users.id
+    WHERE course_id = $1;
+    `;
+
+    return db
+      .query(query, queryParams)
+      .then(res => res.rows)
+      .catch(error => console.log(error));
+
+  }
+
+  return { createMessage, getMessagesInRoom };
 }
