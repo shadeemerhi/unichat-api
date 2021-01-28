@@ -36,7 +36,16 @@ module.exports = () => {
       createMessage(room_id, currentUser.user.uid, message)
       .then(() => {
         io.in(room).emit('message', 
-          { body: message, room_id, sender_id: currentUser.user.uid, firstName: currentUser.firstName, lastName: currentUser.lastName });
+          { 
+            room_id,
+            sender_id: currentUser.user.uid,
+            body: message, 
+            firstName: currentUser.firstName, 
+            lastName: currentUser.lastName,
+            is_edited: false,
+            is_loading: false
+          }
+        );
       });
     })
 
