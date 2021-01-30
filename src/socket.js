@@ -46,6 +46,10 @@ module.exports = () => {
           }
         );
       });
+    });
+
+    socket.on('user-typing', ({ enter, room, firstName, lastName }) => {
+      socket.to(room).emit('show-typing', { enter, firstName, lastName });
     })
 
     socket.on('disconnect', () => {
