@@ -50,6 +50,11 @@ module.exports = () => {
 
     socket.on('user-typing', ({ enter, room, firstName, lastName }) => {
       socket.to(room).emit('show-typing', { enter, firstName, lastName });
+    });
+
+    socket.on('update-message', ({ id, room, newMessage }) => {
+      console.log(id, newMessage);
+      socket.to(room).emit('set-new-message', { id, newMessage });
     })
 
     socket.on('disconnect', () => {
