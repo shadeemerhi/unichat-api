@@ -36,7 +36,6 @@ module.exports = () => {
       createMessage(room_id, currentUser.user.uid, message)
       .then((data) => {
         const newMessage = data.rows[0];
-        console.log('newMessage', newMessage);
         io.in(room).emit('message', 
           {
             ...newMessage,
@@ -52,7 +51,6 @@ module.exports = () => {
     });
 
     socket.on('update-message', ({ id, room, newMessage }) => {
-      console.log(id, newMessage);
       socket.to(room).emit('set-new-message', { id, newMessage });
     })
 
