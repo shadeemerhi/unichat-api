@@ -1,6 +1,7 @@
 module.exports = (db) => {
 
   const createMessage = (course_id, sender_id, body) => {
+    console.log(typeof course_id);
 
     const queryParams = [
       course_id,
@@ -11,13 +12,14 @@ module.exports = (db) => {
     const query = 
       `
       INSERT INTO coursesMessages (course_id, sender_id, body)
-      VALUES ($1, $2, $3);
-      `;
+      VALUES ($1, $2, $3)
+      RETURNING *`;
 
     return db.query(query, queryParams);
   }
 
   const getMessagesInRoom = (room_id) => {
+    console.log(typeof room_id);
 
     const queryParams = [
       room_id
