@@ -1,7 +1,6 @@
 module.exports = (db) => {
 
   const createMessage = (course_id, sender_id, body) => {
-    console.log(typeof course_id);
 
     const queryParams = [
       course_id,
@@ -19,7 +18,6 @@ module.exports = (db) => {
   }
 
   const getMessagesInRoom = (room_id) => {
-    console.log(typeof room_id);
 
     const queryParams = [
       room_id

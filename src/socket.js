@@ -35,7 +35,6 @@ module.exports = () => {
     socket.on('send-message', ({ room_id, room, message, currentUser }) => {
       createMessage(room_id, currentUser.user.uid, message)
       .then((data) => {
-        // console.log('the new message', data.rows[0]);
         const newMessage = data.rows[0];
         console.log('newMessage', newMessage);
         io.in(room).emit('message', 
@@ -44,14 +43,6 @@ module.exports = () => {
             firstName: currentUser.firstName,
             lastName: currentUser.lastName,  
           }
-          // { 
-          //   course_id: room_id,
-          //   sender_id: currentUser.user.uid,
-          //   body: message, 
-          //   firstName: currentUser.firstName, 
-          //   lastName: currentUser.lastName,
-          //   is_edited: false,
-          // }
         );
       });
     });
