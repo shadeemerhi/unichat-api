@@ -28,7 +28,8 @@ module.exports = (db) => {
     SELECT coursesMessages.id, course_id, sender_id, body, "firstName", "lastName", is_edited
     FROM coursesMessages
     JOIN users ON sender_id = users.id
-    WHERE course_id = $1;
+    WHERE course_id = $1
+    ORDER BY id;
     `;
 
     return db
@@ -39,6 +40,20 @@ module.exports = (db) => {
   }
 
   const editMessage = (id, newBody) => {
+
+    const queryParams = [
+      newBody,
+      id
+    ];
+
+    const query = 
+    `
+    UPDATE coursesMessages
+    SET body = $1
+    WHERE id = $2;
+    `;
+
+    return db.query(query, queryParams);
 
   }
 
