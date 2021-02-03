@@ -51,7 +51,11 @@ module.exports = () => {
     });
 
     socket.on('update-message', ({ id, room, newMessage }) => {
-      socket.to(room).emit('set-new-message', { id, newMessage });
+      dbHelpers.editMessage(id, newMessage)
+      .then(() => {
+        socket.to(room).emit('set-new-message', { id, newMessage });
+      })
+      .catch(error => console.log(error));
     })
 
     socket.on('disconnect', () => {
