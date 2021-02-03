@@ -56,7 +56,7 @@ module.exports = () => {
         socket.to(room).emit('set-new-message', { id, newMessage });
       })
       .catch(error => console.log(error));
-    })
+    });
 
     socket.on('disconnect', () => {
       console.log('disconnected');
