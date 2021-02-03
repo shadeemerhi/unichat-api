@@ -38,5 +38,9 @@ module.exports = (db) => {
 
   }
 
-  return { createMessage, getMessagesInRoom };
+  const editMessage = (id, newBody) => {
+
+  }
+
+  return { createMessage, getMessagesInRoom, editMessage };
 }

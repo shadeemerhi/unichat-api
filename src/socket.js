@@ -7,7 +7,7 @@ module.exports = () => {
   const users = {};
   const manageSocket = function(db, socket, io) {
     
-    const createMessage = require('../src/helpers/messages')(db).createMessage;
+    const dbHelpers = require('../src/helpers/messages')(db);
     console.log('New Connection');
     const id = socket.handshake.query.id;
     users[id] = socket.id;
@@ -33,7 +33,7 @@ module.exports = () => {
     });
 
     socket.on('send-message', ({ room_id, room, message, currentUser }) => {
-      createMessage(room_id, currentUser.user.uid, message)
+      dbHelpers.createMessage(room_id, currentUser.user.uid, message)
       .then((data) => {
         const newMessage = data.rows[0];
         io.in(room).emit('message', 
