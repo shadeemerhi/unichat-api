@@ -49,7 +49,9 @@ module.exports = (db) => {
     const query = 
     `
     UPDATE coursesMessages
-    SET body = $1
+    SET 
+    body = $1,
+    is_edited = 'true'
     WHERE id = $2;
     `;
 
