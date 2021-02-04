@@ -12,7 +12,8 @@ module.exports = (db) => {
       `
       INSERT INTO coursesMessages (course_id, sender_id, body)
       VALUES ($1, $2, $3)
-      RETURNING *`;
+      RETURNING id, course_id, sender_id, body, is_edited, 
+      TRIM(LEADING '0' FROM to_char(created_at, 'HH12:MI AM')) as created_at;`;
 
     return db.query(query, queryParams);
   }
@@ -26,7 +27,7 @@ module.exports = (db) => {
     const query = 
     `
     SELECT coursesMessages.id, course_id, sender_id, body, "firstName", 
-    "lastName", is_edited, to_char(created_at, 'HH12:MI AM') as created_at 
+    "lastName", is_edited, TRIM(LEADING '0' FROM to_char(created_at, 'HH12:MI AM')) as created_at 
     FROM coursesMessages
     JOIN users ON sender_id = users.id
     WHERE course_id = $1
