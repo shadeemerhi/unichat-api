@@ -25,7 +25,8 @@ module.exports = (db) => {
 
     const query = 
     `
-    SELECT coursesMessages.id, course_id, sender_id, body, "firstName", "lastName", is_edited
+    SELECT coursesMessages.id, course_id, sender_id, body, "firstName", 
+    "lastName", is_edited, to_char(created_at, 'HH12:MI AM') as created_at 
     FROM coursesMessages
     JOIN users ON sender_id = users.id
     WHERE course_id = $1
