@@ -10,7 +10,7 @@ module.exports = (db) => {
 
     const query = 
       `
-      INSERT INTO coursesMessages (course_id, sender_id, body)
+      INSERT INTO courseRoomsMessages (course_id, sender_id, body)
       VALUES ($1, $2, $3)
       RETURNING id, course_id, sender_id, body, is_edited, 
       TRIM(LEADING '0' FROM to_char(created_at, 'HH12:MI AM')) as created_at;`;
@@ -26,9 +26,9 @@ module.exports = (db) => {
 
     const query = 
     `
-    SELECT coursesMessages.id, course_id, sender_id, body, "firstName", 
+    SELECT courseRoomsMessages.id, course_id, sender_id, body, "firstName", 
     "lastName", is_edited, TRIM(LEADING '0' FROM to_char(created_at, 'HH12:MI AM')) as created_at 
-    FROM coursesMessages
+    FROM courseRoomsMessages
     JOIN users ON sender_id = users.id
     WHERE course_id = $1
     ORDER BY id;
@@ -38,7 +38,6 @@ module.exports = (db) => {
       .query(query, queryParams)
       .then(res => res.rows)
       .catch(error => console.log(error));
-
   }
 
   const editMessage = (id, newBody) => {
@@ -50,7 +49,7 @@ module.exports = (db) => {
 
     const query = 
     `
-    UPDATE coursesMessages
+    UPDATE courseRoomsMessages
     SET 
     body = $1,
     is_edited = 'true'
