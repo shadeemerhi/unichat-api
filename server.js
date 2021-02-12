@@ -36,6 +36,9 @@ db.connect();
 
 // Import helper functions
 const messageHelpers = require('./src/helpers/messages')(db);
+const courseHelpers = require('./src/helpers/courses')(db);
+
+courseHelpers.getCourses();
 
 // Socket manager
 const { manageSocket } = require('./src/socket')(db);
@@ -53,7 +56,7 @@ app.use(express.static('public'));
 // Import Routers
 const users = require('./src/routes/users');
 const programs = require('./src/routes/programs');
-const courses = require('./src/routes/courses');
+const courses = require('./src/routes/courses')(courseHelpers);
 const messages = require('./src/routes/messages')(messageHelpers);
 
 // API Router
