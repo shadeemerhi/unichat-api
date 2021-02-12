@@ -17,7 +17,12 @@ CREATE TABLE users (
 );
 
 CREATE TABLE courseItems (
-
+  id SERIAL PRIMARY KEY NOT NULL,
+  name VARCHAR(255) NOT NULL,
+  title VARCHAR(255) NOT NULL,
+  subject VARCHAR(4) NOT NULL,
+  year INTEGER,
+  description VARCHAR(255)
 );
 
 CREATE TABLE courseRooms (
@@ -42,6 +47,12 @@ CREATE TABLE tutors (
   id SERIAL PRIMARY KEY NOT NULL,
   user_id VARCHAR(255) REFERENCES users(id) ON DELETE CASCADE,
   course_list text[]
+);
+
+CREATE TABLE tutorsCourses (
+  id SERIAL PRIMARY KEY NOT NULL,
+  course_id INTEGER REFERENCES courseItems(id) ON DELETE CASCADE,
+  tutor_id VARCHAR(255) REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE programs (
