@@ -38,7 +38,7 @@ db.connect();
 const messageHelpers = require('./src/helpers/messages')(db);
 const courseHelpers = require('./src/helpers/courses')(db);
 
-courseHelpers.getCourses();
+courseHelpers.getTutorCourses();
 
 // Socket manager
 const { manageSocket } = require('./src/socket')(db);
@@ -62,7 +62,7 @@ const messages = require('./src/routes/messages')(messageHelpers);
 // API Router
 app.use('/api', programs(db));
 app.use('/api', users(db));
-app.use('/api', courses(db));
+app.use('/api', courses);
 app.use('/api', messages);
 
 server.listen(PORT, () => {
