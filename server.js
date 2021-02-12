@@ -38,7 +38,9 @@ db.connect();
 const messageHelpers = require('./src/helpers/messages')(db);
 const courseHelpers = require('./src/helpers/courses')(db);
 
-courseHelpers.getTutorCourses();
+courseHelpers.getTutorCourses().then(data => {
+  console.log('this is the data', data);
+});
 
 // Socket manager
 const { manageSocket } = require('./src/socket')(db);
