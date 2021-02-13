@@ -1,5 +1,10 @@
 module.exports = (db) => {
 
+  const getCourseRooms = () => {
+    const query = 'SELECT * FROM courseRooms';
+    return db.query(query).then(data => data.rows);
+  }
+
   const getTutorCourses = async () => {
     const years = {1: 'first_year', 2: 'second_year', 3: 'third_year'};
     const courses = {};
@@ -9,7 +14,6 @@ module.exports = (db) => {
     }
 
     await Promise.all(coursePromises).then(allCourses => {
-
       /* 
         Formatting the courses object to appear as --> 
         courses = {
@@ -22,9 +26,7 @@ module.exports = (db) => {
       for(const year in years) {
         courses[years[year]] = sortCoursesBySubject(allCourses[year - 1]);
       }
-    })
-    .catch(error => console.log(error));
-
+    });
     return courses;
   }
 
@@ -35,6 +37,8 @@ module.exports = (db) => {
     SELECT * FROM courseItems
     WHERE year = ${year};
     `;
+
+
 
     return db.query(query).then(data => data.rows);
 
@@ -54,7 +58,7 @@ module.exports = (db) => {
 
   }
 
-  return { getTutorCourses };
+  return { getCourseRooms, getTutorCourses };
 }
 
 
