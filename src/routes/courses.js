@@ -21,6 +21,12 @@ module.exports = (helpers) => {
       });
   })
 
+  // Testing calling the API on button click; this will be removed
+  router.get('/courses/testendpoint', (req, res) => {
+    console.log('endpoint being hit');
+    res.send('from the server');
+  })
+
 
   return router;
 }
