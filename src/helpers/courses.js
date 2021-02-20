@@ -38,10 +38,7 @@ module.exports = (db) => {
     WHERE year = ${year};
     `;
 
-
-
     return db.query(query).then(data => data.rows);
-
   }
 
   const sortCoursesBySubject = (courses) => {
@@ -54,8 +51,8 @@ module.exports = (db) => {
         coursesBySubject[course.subject].push(course);
       }
     }
-    return coursesBySubject;
 
+    return coursesBySubject;
   }
 
   return { getCourseRooms, getTutorCourses };
