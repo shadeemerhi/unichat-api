@@ -13,7 +13,8 @@ module.exports = (db) => {
       coursePromises.push(getCoursesByYear(year));
     }
 
-    await Promise.all(coursePromises).then(allCourses => {
+    return Promise.all(coursePromises)
+    .then(allCourses => {
       /* 
         Formatting the courses object to appear as --> 
         courses = {
@@ -26,8 +27,11 @@ module.exports = (db) => {
       for(const year in years) {
         courses[years[year]] = sortCoursesBySubject(allCourses[year - 1]);
       }
+    })
+    .then(() => {
+      console.log(courses);
+      return courses;
     });
-    return courses;
   }
 
   // courses is optional as we can either filter a passed list or directly query the db for the list
