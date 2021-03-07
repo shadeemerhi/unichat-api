@@ -6,7 +6,7 @@ module.exports = (db) => {
     const uid = req.params.id;
     const queryParams = [
       uid
-    ]
+    ];
 
     const query = `SELECT * FROM users WHERE id = $1`;
     db.query(query, queryParams).then(data => {
@@ -17,6 +17,22 @@ module.exports = (db) => {
       res.status(500).send({ error })
     })
   });
+
+  router.get('/users/email/:email', (req, res) => {
+    const email = req.params.email;
+    const queryParams = [
+      email
+    ];
+
+    const query = `SELECT * FROM users WHERE email = $1`;
+    db.query(query, queryParams).then(data => {
+      const user = data.rows[0];
+      console.log(user);
+    })
+    .catch(error => {
+      res.status(500).send({ error });
+    })
+  })
 
 
   router.post('/users', (req, res) => {
