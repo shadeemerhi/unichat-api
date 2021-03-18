@@ -13,6 +13,8 @@ const createPrivateRoom = (db) => async (req, res) => {
             res.status(500).json({msg: 'Something went wrong on private room creation'})
         }
 
+    } else {
+        res.status(500).json({msg: 'Something went wrong on private room creation'})
     }
 }
 
