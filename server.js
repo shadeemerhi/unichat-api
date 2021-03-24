@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const bodyparser = require('body-parser');
+const morgan = require('morgan');
 require("dotenv").config();
 const PORT = process.env.PORT || 8000;
 
@@ -46,6 +47,8 @@ io.on('connection', socket => {
   manageSocket(db, socket, io);
 })
 
+//Logger
+app.use(morgan('dev'));
 // express configuration
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
