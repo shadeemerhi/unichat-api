@@ -1,4 +1,4 @@
-const { createPrivateRoomMsg, getPrivateRoomMsg } = require("./privateRoom");
+const { createPrivateRoomMsg, getPrivateRoomMsg, editPrivateMsg } = require("./privateRoom");
 
 module.exports = (db) => {
 
@@ -49,23 +49,29 @@ module.exports = (db) => {
 
   }
 
-  const editMessage = (id, newBody) => {
+  const editMessage = (id, newBody, isPrivate) => {
 
-    const queryParams = [
-      newBody,
-      id
-    ];
+    if(isPrivate)  {
+      return editPrivateMsg(id, newBody, db)
+    } else {
+      const queryParams = [
+        newBody,
+        id
+      ];
 
-    const query =
-    `
-    UPDATE courseRoomsMessages
-    SET 
-    body = $1,
-    is_edited = 'true'
-    WHERE id = $2;
-    `;
+      const query =
+      `
+      UPDATE courseRoomsMessages
+      SET 
+      body = $1,
+      is_edited = 'true'
+      WHERE id = $2;
+      `;
 
-    return db.query(query, queryParams);
+      return db.query(query, queryParams);
+    }
+
+
 
   }
 
