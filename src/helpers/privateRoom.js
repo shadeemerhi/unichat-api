@@ -35,7 +35,7 @@ const getPrivateRoomMsg = async (roomId , db) => {
 
     const query =
         `
-      SELECT privateRoomMessages.id, room_id sender_id, body, "firstName", 
+      SELECT privateRoomMessages.id, room_id, sender_id, body, "firstName", 
       "lastName", is_edited, TRIM(LEADING '0' FROM to_char(created_at, 'HH12:MI AM')) as created_at 
       FROM privateRoomMessages
       JOIN users ON sender_id = users.id
