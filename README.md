@@ -1,6 +1,6 @@
 # UniChat API
 
-This repo serves as the backend of [UniChat](https://github.com/shadeemerhi/unichat).
+This repo serves as the backend of UniChat, a chat and tutoring application being developed to be used by UCalgary Engineering Students.
 
 ## Dependencies
 
