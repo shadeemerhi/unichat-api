@@ -1,11 +1,14 @@
+const { v4: uuid } = require('uuid');
 
 const createPrivateRoom = db => async (req, res) => {
-    const query = `INSERT INTO privateRooms (name, author_id) VALUES ($1, $2) RETURNING *`;
+    const query = `INSERT INTO privateRooms (name, author_id, room_id) VALUES ($1, $2, $3) RETURNING *`;
 
     if(req.body) {
         const {name: roomName, userId: authorId } = req.body;
 
-        const queryParams = [roomName, authorId];
+        const id = uuid();
+
+        const queryParams = [roomName, authorId, id];
 
         try {
            const { rows } = await db.query(query, queryParams);
