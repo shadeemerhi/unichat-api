@@ -45,6 +45,15 @@ CREATE TABLE courseRoomsMessages (
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW()
 );
 
+CREATE TABLE privateRoomMessages (
+  id SERIAL PRIMARY KEY NOT NULL,
+  room_id INTEGER REFERENCES privaterooms(id) ON DELETE CASCADE,
+  sender_id VARCHAR(255) REFERENCES users(id) ON DELETE CASCADE,
+  body TEXT,
+  is_edited BOOLEAN DEFAULT false,
+  created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW()
+);
+
 CREATE TABLE tutors (
   id SERIAL PRIMARY KEY NOT NULL,
   user_id VARCHAR(255) REFERENCES users(id) ON DELETE CASCADE,
@@ -60,5 +69,11 @@ CREATE TABLE tutorsCourses (
 CREATE TABLE programs (
   id SERIAL PRIMARY KEY NOT NULL,
   name VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE privaterooms (
+    id SERIAL PRIMARY KEY NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    author_id VARCHAR(255) NOT NULL
 );
 
