@@ -27,7 +27,7 @@ module.exports = (db) => {
     const query = `SELECT * FROM users WHERE email = $1`;
     db.query(query, queryParams).then(data => {
       const user = data.rows[0];
-      console.log(user);
+      res.send(user);
     })
     .catch(error => {
       res.status(500).send({ error });
