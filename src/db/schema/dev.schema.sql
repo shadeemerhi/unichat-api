@@ -5,6 +5,8 @@ DROP TABLE IF EXISTS programs CASCADE;
 DROP TABLE IF EXISTS courseItems CASCADE;
 DROP TABLE IF EXISTS courseRooms CASCADE;
 DROP TABLE IF EXISTS courseRoomsMessages CASCADE;
+DROP TABLE IF EXISTS privateRoomMessages CASCADE;
+DROP TABLE IF EXISTS privaterooms CASCADE;
 
 
 CREATE TABLE users (
@@ -45,6 +47,12 @@ CREATE TABLE courseRoomsMessages (
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW()
 );
 
+CREATE TABLE privaterooms (
+    id SERIAL PRIMARY KEY NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    author_id VARCHAR(255) NOT NULL
+);
+
 CREATE TABLE privateRoomMessages (
   id SERIAL PRIMARY KEY NOT NULL,
   room_id INTEGER REFERENCES privaterooms(id) ON DELETE CASCADE,
@@ -70,10 +78,3 @@ CREATE TABLE programs (
   id SERIAL PRIMARY KEY NOT NULL,
   name VARCHAR(255) NOT NULL
 );
-
-CREATE TABLE privaterooms (
-    id SERIAL PRIMARY KEY NOT NULL,
-    name VARCHAR(255) NOT NULL,
-    author_id VARCHAR(255) NOT NULL
-);
-
