@@ -37,9 +37,11 @@ module.exports = (db) => {
 
   router.post('/users', (req, res) => {
 
-    const { uid, email } = req.body.currentUser.user;
-    const { firstName, lastName } = req.body.currentUser;
-    const { program } = req.body;
+    // console.log('the user stuff', req.body);
+
+    const { uid, email } = req.body.user;
+    const { firstName, lastName, program } = req.body;
+    // const { program } = req.body;
     const queryParams = [
       uid,
       email,
@@ -55,13 +57,16 @@ module.exports = (db) => {
     VALUES
     ($1, $2, $3, $4, $5)`;
 
+    throw new Error('Thrown Error');
+
     return db.query(query, queryParams).then((data) => {
       res.send('after database')
+
     })
-    .catch(error => {
-      console.log(error);
-      res.status(500).send({ error })
-    })
+    // .catch(error => {
+    //   console.log(error);
+    //   res.status(500).send({ error })
+    // })
   });
 
   return router;
