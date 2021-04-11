@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const bodyparser = require('body-parser');
+const morgan = require('morgan');
 require("dotenv").config();
 const PORT = process.env.PORT || 8000;
 
@@ -46,6 +47,8 @@ io.on('connection', socket => {
   manageSocket(db, socket, io);
 })
 
+//Logger
+app.use(morgan('dev'));
 // express configuration
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
@@ -53,6 +56,7 @@ app.use(express.static('public'));
 
 // Import Routers
 const users = require('./src/routes/users');
+const privateRoom = require('./src/routes/privateRoom');
 const programs = require('./src/routes/programs');
 const courses = require('./src/routes/courses')(courseHelpers);
 const messages = require('./src/routes/messages')(messageHelpers);
@@ -62,6 +66,7 @@ app.use('/api', programs(db));
 app.use('/api', users(db));
 app.use('/api', courses);
 app.use('/api', messages);
+app.use('/api', privateRoom(db));
 
 server.listen(PORT, () => {
   // eslint-disable-next-line no-console
